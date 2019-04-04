@@ -7,21 +7,16 @@ class CfgFunctions
 		{
 			file = "goko_drop_magz\functions";
 			class Pistol_Particle3DFx {};
-			class Rifle_Particle3DFx {};
 		};
 		class eventhandler
 		{
 			file = "goko_drop_magz\functions";
-			class Pistol_MuzzleReloadEH {};
-			class Rifle_MuzzleReloadEH {};
+			class Muzzle_ReloadEH {};
 		};
-		class init
+		class audio
 		{
 			file = "goko_drop_magz\functions";
-			class CBASettings {};
-			class postInit {};
-			class preInit {preInit = 1;};
-			class unitInit {};
+			class AudioSimulation {};
 		};
 	};
 };

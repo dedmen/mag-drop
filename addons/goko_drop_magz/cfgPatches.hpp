@@ -3,7 +3,7 @@ class CfgPatches
 	class Goko_MagDrop
 	{
 		name = "Magazine Drop Simulation";
-		version="1.22c";
+		version="1.22cDEV";
 		author="Gokmen 'the0utsider'";
 		units[] = {};
 		weapons[]={};

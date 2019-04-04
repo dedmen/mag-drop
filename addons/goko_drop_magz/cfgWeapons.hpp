@@ -1,19 +1,25 @@
 class CfgWeapons
 {
-	class RifleCore;
-	class Rifle: RifleCore
+	class riflecore;
+	class rifle: riflecore
 	{
-		class EventHandlers
+		class eventhandlers
 		{
-			reload		= "_this call gokomd_fnc_debug";
+			class gokomd_riflekind
+			{
+				reload		= "_this call GokoMD_fnc_Pistol_MuzzleReloadEH";
+			};
 		};
 	};
-	class PistolCore;
-	class Pistol: PistolCore
+	class pistolcore;
+	class pistol: pistolcore
 	{
-		class EventHandlers
+		class eventhandlers
 		{
-			reload		= "_this call GokoMD_fnc_Pistol_MuzzleReloadEH";
+			class gokomd_pistolkind
+			{
+				reload		= "_this call GokoMD_fnc_Pistol_MuzzleReloadEH";
+			};
 		};
 	};
 };

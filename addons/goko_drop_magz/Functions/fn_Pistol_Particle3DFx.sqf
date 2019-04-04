@@ -1,42 +1,55 @@
 /* 
- *	Goko Mag Drop add-on v1.22c for ARMA3 DEV v1.92x (implement CBA & Muzzle Reload EH)
+ *	Goko Mag Drop add-on v1.22c for ARMA3
  *	Author: gökmen 'the0utsider' çakal
- *	latest update: 03-29-2019
- *	website: https://github.com/the0utsider/mag-drop
+ *	Repo: github.com/the0utsider/mag-drop
  *	
- *	3D Particle fx
- *
+ *	3D Particle fx function - spawns 3d particle with physics simulation
+ *	spawns script to create super simple object on ground
 */
 
-params ["_unit","_relativeVelocity", "_model"];
+params ["_unit","_relativeVelocity", "_ammoCfg", "_cachedFxCount"];
 
-_popOutMagazine = "#particleSource" createVehicleLocal (getPosATL _unit);
+/// attach a particle source at hands of unit and spawn a magazine model with physics simulation
+private _popOutMagazine = "#particleSource" createVehicleLocal (getPosATL _unit);
 _popOutMagazine setParticleParams
 [
-	/*Sprite*/				[_model,1,18,1,0],"",// File,Ntieth,Index,Count,Loop
+	/*Sprite*/				[_ammoCfg,1,18,1,0],"",// File,Ntieth,Index,Count,Loop
 	/*Type*/				"spaceObject",
-	/*TimmerPer*/			18000,
-	/*Lifetime*/			0.6,
+	/*TimmerPer*/			0.9,
+	/*Lifetime*/			1,
 	/*Position*/			[0,0,0],
 	/*MoveVelocity*/		_relativeVelocity,
-	/*Simulation*/			random 1, 1, 0.2, 0,//rotationVel,weight,volume,rubbing
+	/*Simulation*/			random 1, 3.2, 1, 0.1,//rotationVel,weight,volume,rubbing
 	/*Scale*/				[0.9],
 	/*Color*/				[[1,1,1,1],[1,1,1,1]],
 	/*AnimSpeed*/			[1,1],
-	/*randDirPeriod*/		5,
-	/*randDirIntesity*/		0.5,
-	/*onTimerScript*/		"",
-	/*DestroyScript*/		"\goko_drop_magz\Functions\onGround.sqf",
+	/*randDirPeriod*/		0.01,
+	/*randDirIntesity*/		0.2,
+	/*onTimerScript*/		"\goko_drop_magz\Functions\TransformIntoSimpleObject.sqf",
+	/*DestroyScript*/		"",
 	/*Follow*/				"",
-	/*Angle*/				random 359,
-	/*onSurface*/			true,
-	/*bounceOnSurface*/		0.3,
+	/*Angle*/				0,
+	/*onSurface*/			false,
+	/*bounceOnSurface*/		0.21,
 	/*emissiveColor*/		[[0,0,0,0]],
-	/*3D Array Vector dir*/	[0.01,0.01,0.99]
+	/*3D Array Vector dir*/	[random 0.5, random -0.5, -1 + random 2]
 ];
-
-// RANDOM / TOLERANCE PARAMS
-
-_modelMemoryPoints = selectRandom ["LeftForeArm", "LeftForeArmRoll", "RightForeArmRoll", "rwrist"]; 
-_popOutMagazine setDropInterval 18000; 
+private _modelMemoryPoints = selectRandom ["lwrist", "rwrist"]; 
+_popOutMagazine setDropInterval 10; 
 _popOutMagazine attachTo [_unit, [0,0,0], _modelMemoryPoints];
+
+/// detach and get rid of particle source safely
+private _attachedArr = attachedObjects _unit;
+private _particleSourceExists = _attachedArr findIf { (typeOf _x) isEqualto "#particleSource"};
+private _findLastAddedParticle = _particleSourceExists + _cachedFxCount;
+
+if !(_particleSourceExists == -1 && {_cachedFxCount == 0}) then {
+	[{	
+		detach (_this#0 select _this#1); 
+		deleteVehicle (_this#0 select _this#1);
+	}, [_attachedArr, _findLastAddedParticle], 1] call CBA_fnc_waitAndExecute;
+};
+
+[{	
+	_this call GokoMD_fnc_AudioSimulation;
+}, _unit, 0.7] call CBA_fnc_waitAndExecute;
