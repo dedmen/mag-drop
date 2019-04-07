@@ -8,7 +8,7 @@
 */
 
 
-params ["_unit", "_relativeVelocity", "_ammoModelP3D", "_cachedAttachToCount"];
+params ["_unit", "_passVelocity", "_ammoModelP3D", "_cachedAttachToCount"];
 
 /// attach a particle source at hands of unit and spawn a magazine model with physics simulation
 private _popOutMagazine = "#particleSource" createVehicleLocal (getPosATL _unit);
@@ -19,7 +19,7 @@ _popOutMagazine setParticleParams
 	/*TimmerPer*/			0.9,
 	/*Lifetime*/			1,
 	/*Position*/			[0,0,0],
-	/*MoveVelocity*/		_relativeVelocity,
+	/*MoveVelocity*/		_passVelocity,
 	/*Simulation*/			random 1.5, 14, 1, 0.4,//rotationVel,weight,volume,rubbing
 	/*Scale*/				[0.9],
 	/*Color*/				[[1,1,1,1],[1,1,1,1]],
@@ -60,4 +60,4 @@ private _attachedListLast = attachedObjects _actor;
 	detach (_this#0 select _this#1); 
 	deleteVehicle (_this#0 select _this#1);
 	_this#2 call GokoMS_fnc_AudioSimulation;
-}, [_attachedListLast, _cachedAttachToCount, _unit], 0.7] call CBA_fnc_waitAndExecute;
+}, [_attachedListLast, _cachedAttachToCount, _unit], 0.65] call CBA_fnc_waitAndExecute;

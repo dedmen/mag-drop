@@ -8,14 +8,14 @@
 */
 
 params ["_unit", "_weapon", "_muzzle", "_newmag", ["_oldmag", ["","","",""]]];
-
+systemchat "working";
 /// Do nothing If clip being pulled out still have bullets in it
 if !(_oldmag#1 isEqualTo 0) exitWith{};
 
 /// velocity to pass on magazine: calculate forward vector of unit and bump it a little
 private _unitVelocity =  velocity _unit;
 private _unitDirection = direction _unit;
-private _addVelocity = if (speed _unit isEqualTo 0) then {random 0.5 + random 0.5} else {1 + random 1};	
+private _addVelocity = if (speed _unit isEqualTo 0) then {random 0.5 + random 0.5} else {0.5 + random 1};	
 private _addVelocityForwardVector = 
 [
 	(velocity _unit # 0) + (sin _unitDirection * _addVelocity),
@@ -50,6 +50,7 @@ _unit setVariable ["GokoMS_VAR_magazineModelName",_foundMagazineP3D];
 /// count array, it will become index selector after incrementing attached objects array with particle Source
 private _existingAttachedObjects = (count attachedObjects _unit);
 
+/// pass params and exec particle function with delay
 [{
 	[
 		_this#0,
@@ -58,7 +59,7 @@ private _existingAttachedObjects = (count attachedObjects _unit);
 		_this#3
 	] remoteExecCall ["GokoMS_fnc_Magazine_Particle3DFx"];
 
-}, [_unit, _particleVelocity, _foundMagazineP3D, _existingAttachedObjects], (0.3 + (random 0.3)] call CBA_fnc_waitAndExecute;
+}, [_unit, _particleVelocity, _foundMagazineP3D, _existingAttachedObjects], 0.3 + random 0.3] call CBA_fnc_waitAndExecute;
 
 
 /*

@@ -9,7 +9,7 @@
 
 private _particlePosASL = _this;
 private _unitFound = (_particlePosASL nearEntities ["CAManBase", 4])#0;
-private _getMagModel = _unitFound getVariable "GokoMS_VAR_magazineModelNamePistol";
+private _getMagModel = _unitFound getVariable "GokoMS_VAR_magazineModelName";
 
 private _formatModelName = if !(isNil "_getMagModel") then 
 {

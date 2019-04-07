@@ -7,9 +7,9 @@
 
 class CfgPatches
 {
-	class Goko_MagDrop
+	class Magazine_Simulation
 	{
-		name = "Magazine Drop Simulation";
+		name = "Magazine Simulation";
 		version="1.23DEV";
 		author="Gokmen 'the0utsider'";
 		units[] = {};

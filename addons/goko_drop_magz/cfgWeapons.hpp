@@ -17,7 +17,7 @@ class CfgWeapons
 	    // inheriting Eventhandlers class for better modcross compatibility
 	    class Eventhandlers: Eventhandlers 
 	    {
-	        reload = "systemchat format['fired EH output: %1 [time: %2]',_this, time]";
+	        reload = "_this call GokoMS_fnc_Muzzle_ReloadEH";
 	    };
 	};
 	class PistolCore;
@@ -30,7 +30,7 @@ class CfgWeapons
 	    // inheriting Eventhandlers class for better modcross compatibility
 	    class Eventhandlers: Eventhandlers 
 	    {
-	        reload = "systemchat format['fired EH output: %1 [time: %2]',_this, time]";
+	        reload = "_this call GokoMS_fnc_Muzzle_ReloadEH";
 	    };
 	};
 };

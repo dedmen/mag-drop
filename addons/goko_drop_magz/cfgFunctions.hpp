@@ -7,13 +7,13 @@
 
 class CfgFunctions
 {
-	class Goko_MagDrop
+	class Goko_Magazine_Simulation
 	{
 		tag = "GokoMS";
 		class particle
 		{
 			file = "goko_drop_magz\functions";
-			class Pistol_Particle3DFx {};
+			class Magazine_Particle3DFx {};
 		};
 		class eventhandler
 		{
