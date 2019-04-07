@@ -1,25 +1,36 @@
+/* 
+ *	Goko Magazine Simulation A3 add-on v1.23d for ARMA3 STEAM DEV BRANCH
+ *	Author: cgökmen 'the0utsider'
+ *	Repo: github.com/the0utsider/mag-drop
+ *
+*/
+
 class CfgWeapons
 {
-	class riflecore;
-	class rifle: riflecore
+	class RifleCore;
+	class Rifle : RifleCore 
 	{
-		class eventhandlers
-		{
-			class gokomd_riflekind
-			{
-				reload		= "_this call GokoMD_fnc_Pistol_MuzzleReloadEH";
-			};
-		};
+	    class Eventhandlers;
 	};
-	class pistolcore;
-	class pistol: pistolcore
+	class Rifle_Base_F: Rifle 
 	{
-		class eventhandlers
-		{
-			class gokomd_pistolkind
-			{
-				reload		= "_this call GokoMD_fnc_Pistol_MuzzleReloadEH";
-			};
-		};
+	    // inheriting Eventhandlers class for better modcross compatibility
+	    class Eventhandlers: Eventhandlers 
+	    {
+	        reload = "systemchat format['fired EH output: %1 [time: %2]',_this, time]";
+	    };
+	};
+	class PistolCore;
+	class Pistol : PistolCore 
+	{
+	    class Eventhandlers;
+	};
+	class Pistol_Base_F: Pistol 
+	{
+	    // inheriting Eventhandlers class for better modcross compatibility
+	    class Eventhandlers: Eventhandlers 
+	    {
+	        reload = "systemchat format['fired EH output: %1 [time: %2]',_this, time]";
+	    };
 	};
 };

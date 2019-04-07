@@ -1,6 +1,6 @@
 /* 
- *	Goko Mag Drop add-on v1.22c for ARMA3
- *	Author: gökmen 'the0utsider' çakal
+ *	Goko Magazine Simulation A3 add-on v1.23d for ARMA3 STEAM DEV BRANCH
+ *	Author: cgökmen 'the0utsider'
  *	Repo: github.com/the0utsider/mag-drop
  *	
  *	plays 3D sound effect in the world for dropped item
