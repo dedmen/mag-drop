@@ -42,7 +42,7 @@ _popOutMagazine attachTo [_unit, [0,0,0], _modelMemoryPoints];
 
 /// detach and get rid of particle source. (still needs testing if this needs delay or not) using small delay with cba WaE
 /// Array count from previous function represents last added attached array object above without any modification.
-private _attachedListLast = attachedObjects _actor;
+private _attachedListLast = attachedObjects _unit;
 
 /*
 [{	
