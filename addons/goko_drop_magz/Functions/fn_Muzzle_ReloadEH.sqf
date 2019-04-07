@@ -29,7 +29,7 @@ private _particleVelocity = ([0.8 - random 1.6, 0.8 - random 1.6, random 0.1] ve
 private _getMagazineAuthor = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "author");
 private _getMagazineCfgModelName = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "model");
 private _getMagazineCfgModelNameSpecial = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "modelSpecial");
-// nameSpecial have detailed models but their Z orientation is 90degrees off, they stand straight on ground, don't look good.
+// nameSpecial have detailed models but their Z orientation is 90degrees turned, they stand straight on ground, don't look good.
 private _getModel = if (_getMagazineCfgModelName isEqualTo "") then {_getMagazineCfgModelNameSpecial;} else {_getMagazineCfgModelName;};
 private _foundMagazineP3D = "";
 private _findIfP3D = _getModel splitString ".";
