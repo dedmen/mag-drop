@@ -26,6 +26,7 @@ private _addVelocityForwardVector =
 private _particleVelocity = ([0.8 - random 1.6, 0.8 - random 1.6, random 0.1] vectorAdd _addVelocityForwardVector);
 
 /// magazine config check for p3d model
+private _getMagazineAuthor = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "author");
 private _getMagazineCfgModelName = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "model");
 private _getMagazineCfgModelNameSpecial = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "modelSpecial");
 // nameSpecial have detailed models but their Z orientation is 90degrees off, they stand straight on ground, don't look good.
@@ -38,13 +39,16 @@ if ("p3d" in _findIfP3D) then
 	switch _getModel do {
 		case "\A3\weapons_F\ammo\mag_univ.p3d" : {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
 		case "" : {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
-		default { _foundMagazineP3D = _getModel };
+		default {_foundMagazineP3D = _getModel};
 	};
 } else {
-	_foundMagazineP3D = ([_getModel, "p3d"] joinString ".");
+	
+	switch _getMagazineAuthor do {
+		case "BW-Mod" : {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
+		default {_foundMagazineP3D = [_getModel, "p3d"] joinString "."};
+	};
 };
-
-/// Store or update magazine model name in object's namespace variable, will be needed in SimpleObject script
+// Store or update magazine model name in object's namespace variable, will be needed in SimpleObject script
 _unit setVariable ["GokoMS_VAR_magazineModelName",_foundMagazineP3D];
 
 /// count array, it will become index selector after incrementing attached objects array with particle Source
