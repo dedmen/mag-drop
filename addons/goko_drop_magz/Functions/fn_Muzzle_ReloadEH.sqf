@@ -8,14 +8,13 @@
 */
 
 params ["_unit", "_weapon", "_muzzle", "_newmag", ["_oldmag", ["","","",""]]];
-systemchat "working";
 /// Do nothing If clip being pulled out still have bullets in it
 if !(_oldmag#1 isEqualTo 0) exitWith{};
 
 /// velocity to pass on magazine: calculate forward vector of unit and bump it a little
 private _unitVelocity =  velocity _unit;
 private _unitDirection = direction _unit;
-private _addVelocity = if (speed _unit isEqualTo 0) then {random 0.5 + random 0.5} else {0.5 + random 1};	
+private _addVelocity = if (speed _unit isEqualTo 0) then {0.3 + random 0.4} else {0.5};	
 private _addVelocityForwardVector = 
 [
 	(velocity _unit # 0) + (sin _unitDirection * _addVelocity),
@@ -23,13 +22,13 @@ private _addVelocityForwardVector =
 	(velocity _unit # 2)
 ];
 // add some randomization and finalize calculation
-private _particleVelocity = ([0.8 - random 1.6, 0.8 - random 1.6, random 0.1] vectorAdd _addVelocityForwardVector);
+private _particleVelocity = ([-0.8 + random 1.5, -0.8 + random 1.5, 0] vectorAdd _addVelocityForwardVector);
 
 /// magazine config check for p3d model
 private _getMagazineAuthor = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "author");
 private _getMagazineCfgModelName = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "model");
 private _getMagazineCfgModelNameSpecial = getText(configfile >> "CfgMagazines" >> _oldmag#0 >> "modelSpecial");
-// nameSpecial have detailed models but their Z orientation is 90degrees turned, they stand straight on ground, don't look good.
+// nameSpecial have detailed models but their Z orientation is 90degrees up, they stand straight on ground, don't look good.
 private _getModel = if (_getMagazineCfgModelName isEqualTo "") then {_getMagazineCfgModelNameSpecial;} else {_getMagazineCfgModelName;};
 private _foundMagazineP3D = "";
 private _findIfP3D = _getModel splitString ".";
@@ -38,14 +37,14 @@ if ("p3d" in _findIfP3D) then
 {
 	switch _getModel do {
 		case "\A3\weapons_F\ammo\mag_univ.p3d" : {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
-		case "" : {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
 		default {_foundMagazineP3D = _getModel};
 	};
 } else {
-	
+	/// this is special case for RHS magazines. Some of them also have BI as author name. Once in *.p3d format, they are good to go
 	switch _getMagazineAuthor do {
-		case "BW-Mod" : {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
-		default {_foundMagazineP3D = [_getModel, "p3d"] joinString "."};
+		case "Red Hammer Studios" : {_foundMagazineP3D = [_getModel, "p3d"] joinString "."};
+		case "Bohemia Interactive" : {_foundMagazineP3D = [_getModel, "p3d"] joinString "."};
+		default {_foundMagazineP3D = "\A3\Structures_F_EPB\Items\Military\Magazine_rifle_F.p3d"};
 	};
 };
 // Store or update magazine model name in object's namespace variable, will be needed in SimpleObject script
